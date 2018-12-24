@@ -1,0 +1,29 @@
+{
+  "name": "grocery_list",
+  "version": "1.0.0",
+  "description": "Add/remove/update/check/uncheck grocery list items synced in real time across multiple devices",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "set NODE_ENV=test&& jasmine",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bnreine/grocery_list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bnreine/grocery_list/issues"
+  },
+  "homepage": "https://github.com/bnreine/grocery_list#readme",
+  "devDependencies": {
+    "jasmine": "^3.3.1",
+    "request": "^2.88.0"
+  },
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.4"
+  }
+}
