@@ -9,3 +9,6 @@
 7. Make config files to say where everything goes
 8. Deploy to heroku (bnreine-grocery-list)
 9. Make static page with nav bar
+10. create test and dev database
+11. Use sequelize for ORM
+12. Seed data in list

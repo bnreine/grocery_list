@@ -5,9 +5,7 @@ const viewsFolder = path.join(__dirname, "..", "views");
 module.exports = {
   init(app, express){
     app.set("views", viewsFolder);
-    console.log("before")
-    app.set("view engine", "ejs");  //Seems to work properly
-    console.log("after")
+    app.set("view engine", "ejs"); 
     app.use(express.static(path.join(__dirname, "..", "assets")));
   }
 };
