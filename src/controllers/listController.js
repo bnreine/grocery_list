@@ -7,7 +7,8 @@ module.exports = {
       if(err){
         res.redirect("/");
       } else {
-        res.render("lists/grocery_list_static", {lists});
+        //res.render("lists/grocery_list_static", {lists});
+        res.send({lists});
       }
     })
   }

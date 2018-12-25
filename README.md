@@ -12,3 +12,5 @@
 10. create test and dev database
 11. Use sequelize for ORM
 12. Seed data in list
+13. create react app, add to client folder in main folder
+14. follow onlin site to serve up react files using express
