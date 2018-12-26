@@ -11,14 +11,32 @@ class App extends Component {
       nextItem: '',
       nextId: 0,
       nextPurchased: false,
-      endpoint: "http://127.0.0.1:5000"
+      endpoint: ""/*"https://bnreine-grocery-list.herokuapp.com/"  "http://127.0.0.1:5000"*/
     }
   }
 
   componentDidMount() {
+    this.getServerURL();
     this.getGroceryListRequest();
     this.openSocket();
   }
+
+
+  getServerURL(){
+    let url = "/get_url";
+    fetch(url)
+    .then(r => {
+      return r.json();
+    })
+    .then(data => {
+      this.setState({endpoint: data.url});
+    })
+    .catch(e => {
+      console.log(`An error occurred: ${e}`);
+    });
+  }
+
+
 
   openSocket(){
     const { endpoint } = this.state;

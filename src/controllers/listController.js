@@ -47,5 +47,9 @@ module.exports = {
       }
     })
   },
+  getURL(req, res, next){
+    const url = process.env.URL;
+    res.send({url});
+  }
 
 }
