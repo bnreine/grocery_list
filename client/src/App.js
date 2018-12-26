@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import socketIOClient from "socket.io-client";
 import ListItem from './components/ListItem.js';
 
 class App extends Component {
@@ -9,12 +10,18 @@ class App extends Component {
       lists: [], //each is an object that contains item, id, and purchased properties
       nextItem: '',
       nextId: 0,
-      nextPurchased: false
+      nextPurchased: false,
+      endpoint: "http://127.0.0.1:5000"
     }
   }
 
   componentDidMount() {
     this.getGroceryList();
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.on("listEntriesDatabase", data => {
+      this.setState({ lists: data.lists })
+    });
   }
 
 
