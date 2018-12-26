@@ -7,9 +7,23 @@ module.exports = {
       if(err){
         res.redirect("/");
       } else {
-        //res.render("lists/grocery_list_static", {lists});
         res.send({lists});
       }
     })
+  },
+  addItem(req, res, next){
+    let newListItem= {
+      item: req.body.newListItem.item,
+      purchased: req.body.newListItem.purchased
+    };
+    listQueries.addListItem(newListItem, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
   }
+
+
 }

@@ -1,6 +1,6 @@
 const request = require("request");
 const server = require("../../src/server");
-const base = "http://localhost:3000/grocery_list/";
+const base = "http://localhost:5000/grocery_list/";
 const sequelize = require('../../src/db/models/index').sequelize;
 const List = require("../../src/db/models").List;
 
@@ -46,9 +46,45 @@ describe("routes : lists", () => {
     it("should return a status code 200", (done) => {
       request.get(base, (err, res, body) => {
         expect(res.statusCode).toBe(200);
+        expect(body).not.toBeNull();
         done();
       });
     });
 
   });
+
+
+
+  describe("POST /grocery_list/add_item", () => {
+    it("should add an item to the database", (done) => {
+      const options = {
+        url: `${base}add_item`,
+        form: {
+          newListItem: {
+            item: "tomatos",
+            purchased: false
+          }
+        }
+      };
+        request.post(options, (err, res, body) => {
+          List.findOne({where: {item: "tomatos"}})
+          .then((list) => {
+            expect(list).not.toBeNull();
+            expect(list.item).toBe("tomatos");
+            expect(list.purchased).toBe(false);
+            done();
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          })
+        })
+    })
+
+  })
+
+
+
+
+
 });
