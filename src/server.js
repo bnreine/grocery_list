@@ -1,28 +1,12 @@
 const app = require("./app");
 const http = require("http");
-const express = require('express');
-const path = require('path');
+const socketIo = require("socket.io");
 const port = normalizePort(process.env.PORT || "5000");
-const bodyParser = require('body-parser');
+const List = require("./db/models").List;
 app.set("port", port);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-//Fake routes for testing front to back connection
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(`I received your POST request.  This is what you sent me: ${req.body.post}`);
-});
-
-
 
 const server = http.createServer(app);
+const io = socketIo(server);
 
 server.listen(port);
 
@@ -37,14 +21,35 @@ function normalizePort(val) {
   return false;
 }
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
+
+
+
+
+io.on("connection", socket => {
+  console.log("New client connected"), setInterval(
+    () => getListEntriesAndEmit(socket),
+    10000
+  );
+  socket.on("disconnect", () => console.log("Client disconnected"));
+});
+
+
+const getListEntriesAndEmit = socket => {
+  List.findAll({
+    attributes: ['item', 'purchased', 'id']
+  })
+  .then((lists) => {
+    socket.emit("listEntriesDatabase", {lists});
+  })
+  .catch((err) => {
+    console.error(`Error: ${err}`);
+  })
+
+
+};
+
+
+
 
 
 server.on("listening", () => {

@@ -7,9 +7,45 @@ module.exports = {
       if(err){
         res.redirect("/");
       } else {
-        //res.render("lists/grocery_list_static", {lists});
         res.send({lists});
       }
     })
-  }
+  },
+  addItem(req, res, next){
+    let newListItem= {
+      item: req.body.newListItem.item,
+      purchased: req.body.newListItem.purchased
+    };
+    listQueries.addListItem(newListItem, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
+  },
+  checkUncheckItem(req, res, next){
+    const updatedListItem = req.body.listItem;
+
+    listQueries.updatePurchased(updatedListItem, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
+  },
+  deleteItem(req, res, next){
+
+    const deletionId = req.body.listItem.id;
+
+    listQueries.delete(deletionId, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
+  },
+
 }
