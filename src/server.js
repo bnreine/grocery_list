@@ -28,7 +28,7 @@ function normalizePort(val) {
 io.on("connection", socket => {
   console.log("New client connected"), setInterval(
     () => getListEntriesAndEmit(socket),
-    10000
+    3000
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });

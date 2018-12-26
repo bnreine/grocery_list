@@ -75,7 +75,6 @@ class App extends Component {
     })
     .then(data => {
       console.log(`Success:`, JSON.stringify(data))
-      //this.setState({})
     })
     .catch(e => {
       console.log(`An error occurred: ${e}`);

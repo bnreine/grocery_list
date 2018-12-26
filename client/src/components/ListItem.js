@@ -23,7 +23,7 @@ renderDeleteBox(){
     return (
       <li>
         {this.renderCheckBox()}
-        <span>item: {this.props.item}, purchased: {(this.props.purchased) ? 'true' : 'false'}, id: {this.props.id}</span>
+        <span>{this.props.item}</span>
         {this.renderDeleteBox()}
       </li>
     );
