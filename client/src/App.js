@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      lists: [], //each is an object that contains item, id, and purchased properties
+      lists: [],
       nextItem: '',
       nextId: 0,
       nextPurchased: false,
@@ -16,7 +16,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getGroceryList();
+    this.getGroceryListRequest();
+    this.openSocket();
+  }
+
+  openSocket(){
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
     socket.on("listEntriesDatabase", data => {
@@ -25,21 +29,23 @@ class App extends Component {
   }
 
 
-  getGroceryList(){
+
+
+  getGroceryListRequest(){
     let url = "/grocery_list";
     fetch(url)
     .then(r => {
       return r.json();
     })
     .then(data => {
-      this.setState({lists: data.lists, nextId: data.lists[data.lists.length - 1].id + 1});
+      this.setState({lists: data.lists});
     })
     .catch(e => {
       console.log(`An error occurred: ${e}`);
     });
   }
 
-  addListItem(newListItem){
+  addListItemRequest(newListItem){
     let url = "/grocery_list/add_item";
     fetch(url, {
       method: 'POST',
@@ -51,6 +57,7 @@ class App extends Component {
     })
     .then(data => {
       console.log(`Success:`, JSON.stringify(data))
+      //this.setState({})
     })
     .catch(e => {
       console.log(`An error occurred: ${e}`);
@@ -76,10 +83,65 @@ class App extends Component {
       item: this.state.nextItem,
       purchased: this.state.nextPurchased
     }
-    const nextNextId = this.state.nextId + 1;
     if (!this.state.nextItem) { return }
-    this.setState({ nextItem: '', nextId: nextNextId, lists: [...lists, nextListEntry] });
-    this.addListItem(newListItem);
+    this.setState({ nextItem: '', lists: [...lists, nextListEntry] });
+    this.addListItemRequest(newListItem);
+  }
+
+
+  togglePurchased(index){
+    const lists = this.state.lists.slice();  //makes a copy of the lists array
+    const listItem = lists[index];
+    listItem.purchased = listItem.purchased ? false : true;
+    this.setState({ lists: lists });
+    this.togglePurchasedRequest(listItem);
+  }
+
+
+  togglePurchasedRequest(listItem){
+    let url = "/grocery_list/check_uncheck_item";
+    fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({listItem})
+    })
+    .then(r => {
+      return r.json();
+    })
+    .then(data => {
+      console.log(`Success:`, JSON.stringify(data))
+    })
+    .catch(e => {
+      console.log(`An error occurred: ${e}`);
+    });
+  }
+
+
+  delete(deletionIndex){
+    console.log(`Deleted: ${deletionIndex}`);
+    const deletionListItem = this.state.lists[deletionIndex];
+    const newLists = this.state.lists.slice().filter((list, index) => index !== deletionIndex);
+    this.setState({lists: newLists});
+    this.deleteListItemRequest(deletionListItem);
+  }
+
+
+  deleteListItemRequest(listItem){
+    let url = "/grocery_list/delete";
+    fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({listItem})
+    })
+    .then(r => {
+      return r.json();
+    })
+    .then(data => {
+      console.log(`Success:`, JSON.stringify(data))
+    })
+    .catch(e => {
+      console.log(`An error occurred: ${e}`);
+    });
   }
 
 
@@ -88,7 +150,7 @@ class App extends Component {
       <div className="App">
         <ul>
           {this.state.lists.map((list, index) =>
-            <ListItem key={index} purchased={list.purchased} item={list.item} id={list.id}/>
+            <ListItem key={index} purchased={list.purchased} item={list.item} id={list.id} togglePurchased={() => this.togglePurchased(index)} delete={() => this.delete(index)} />
           )}
         </ul>
         <form onSubmit={(e) => this.createNewItem(e)} >

@@ -23,7 +23,29 @@ module.exports = {
         res.send({listItem});
       }
     })
-  }
+  },
+  checkUncheckItem(req, res, next){
+    const updatedListItem = req.body.listItem;
 
+    listQueries.updatePurchased(updatedListItem, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
+  },
+  deleteItem(req, res, next){
+
+    const deletionId = req.body.listItem.id;
+
+    listQueries.delete(deletionId, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
+  },
 
 }

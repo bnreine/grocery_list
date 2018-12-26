@@ -14,3 +14,4 @@
 12. Seed data in list
 13. create react app, add to client folder in main folder
 14. follow onlin site to serve up react files using express
+15. hold off on showing auxiliary functionaltiy on each list item until item added to database, returned and state updated with id

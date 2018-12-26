@@ -4,6 +4,9 @@ const base = "http://localhost:5000/grocery_list/";
 const sequelize = require('../../src/db/models/index').sequelize;
 const List = require("../../src/db/models").List;
 
+console.log("hello")
+
+
 describe("routes : lists", () => {
 
   beforeEach((done) => {
@@ -83,6 +86,63 @@ describe("routes : lists", () => {
 
   })
 
+
+
+
+
+/*
+
+  describe("POST /grocery_list/check_uncheck_item", () => {
+    it("should update item in the database", (done) => {
+
+
+      const options = {
+        url: `${base}add_item`,
+        form: {
+          newListItem: {
+            item: "ravioli",
+            purchased: false
+          }
+        }
+      };
+      request.post(options, (err, res, body) => {
+        List.findOne({where: {item: "tomatos"}})
+        .then((list) => {
+          expect(list).not.toBeNull();
+          expect(list.item).toBe("tomatos");
+          expect(list.purchased).toBe(false);
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        })
+      })
+
+
+
+
+
+
+
+      List.findById(1)
+      .then((listItem) => {
+        expect(listItem.item).toBe("cabbage");
+        listItem.update(updatedListItem, {
+          fields: Object.keys(updatedListItem)
+        })
+        .then((newlyUpdatedListItem) => {
+          expect(newlyUpdatedListItem.item).toBe("ravioli");
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
+    })
+  })
+*/
 
 
 
