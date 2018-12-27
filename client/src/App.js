@@ -135,7 +135,6 @@ class App extends Component {
 
 
   delete(deletionIndex){
-    console.log(`Deleted: ${deletionIndex}`);
     const deletionListItem = this.state.lists[deletionIndex];
     const newLists = this.state.lists.slice().filter((list, index) => index !== deletionIndex);
     this.setState({lists: newLists});
@@ -160,6 +159,9 @@ class App extends Component {
       console.log(`An error occurred: ${e}`);
     });
   }
+
+
+
 
 
   render() {
