@@ -1,5 +1,11 @@
 # grocery_list
 
+0. Updates(Dec 27th, 2018).  I added the edit/update feature and fixed the ordering issues by querying the database to order them upon return.
+The biggest UX issue is now the lag after updating the item.  If I had more time, I could lift up state from the ListItem component to the
+parent App component and this would allow me to update state in a direct setState command on the App component instead of via a backend call
+and socket update within 3 seconds.  Currently working on authentication.  Should be done before our meeting tomorrow.
+
+
 1. Project Description: The problem is to create a grocery list application that allows adding, deleting, and updating list items.  It also shares
 and syncs the application across multiple devices.  The user can type in a new item and click "add" to add a new item to the list.  They
 can also check and uncheck whether they or somebody else in the family purchased the item.  They can delete the item on the list by clicking
