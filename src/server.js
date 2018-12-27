@@ -36,6 +36,9 @@ io.on("connection", socket => {
 
 const getListEntriesAndEmit = socket => {
   List.findAll({
+    order: [
+      ['id', 'ASC'],
+    ],
     attributes: ['item', 'purchased', 'id']
   })
   .then((lists) => {

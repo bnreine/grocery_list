@@ -26,7 +26,6 @@ module.exports = {
   },
   checkUncheckItem(req, res, next){
     const updatedListItem = req.body.listItem;
-
     listQueries.updatePurchased(updatedListItem, (err, listItem) => {
       if(err){
         console.log(err);
@@ -50,6 +49,16 @@ module.exports = {
   getURL(req, res, next){
     const url = process.env.URL;
     res.send({url});
-  }
+  },
+  updateItem(req, res, next){
+    const updatedListItem = req.body.newListItem;
+    listQueries.updateItem(updatedListItem, (err, listItem) => {
+      if(err){
+        console.log(err);
+      } else {
+        res.send({listItem});
+      }
+    })
+  },
 
 }

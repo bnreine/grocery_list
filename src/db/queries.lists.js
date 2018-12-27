@@ -4,6 +4,9 @@ const List = require("./models").List;
 module.exports = {
   getAllListItems(callback){
     List.findAll({
+      order: [
+        ['id', 'ASC'],
+      ],
       attributes: ['item', 'purchased', 'id']
     })
     .then((lists) => {
@@ -51,6 +54,22 @@ module.exports = {
       callback(err);
     });
   },
-
+  updateItem(updatedListItem, callback){
+    return List.findById(updatedListItem.id)
+    .then((listItem) => {
+      if(!listItem){
+        return callback("List Item not found");
+      }
+      listItem.update(updatedListItem, {
+        fields: Object.keys(updatedListItem)
+      })
+      .then(() => {
+        callback(null, listItem);
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    });
+  },
 
 }
