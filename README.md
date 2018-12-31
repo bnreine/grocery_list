@@ -1,20 +1,14 @@
 # grocery_list
 
-0. Updates(Dec 27th, 2018).  I added the edit/update feature and fixed the ordering issues by querying the database to order them upon return.
-The biggest UX issue is now the lag after updating the item.  If I had more time, I could lift up state from the ListItem component to the
-parent App component and this would allow me to update state in a direct setState command on the App component instead of via a backend call
-and socket update within 3 seconds.  Currently working on authentication.  Should be done before our meeting tomorrow.
-
-
 1. Project Description: The problem is to create a grocery list application that allows adding, deleting, and updating list items.  It also shares
 and syncs the application across multiple devices.  The user can type in a new item and click "add" to add a new item to the list.  They
 can also check and uncheck whether they or somebody else in the family purchased the item.  They can delete the item on the list by clicking
 the delete button next to the associated item.  Finally, the user can update/edit the item by clicking the edit button next to the associated
 item.  
 
-2. Approach: My approach to building this application was to plan out the user stories on a whiteboard first with drawings of how the database models would relate to the front-end UI.  Then, I made a Kan-Ban board with 9 user stories, each with a task list, wireframes, difficulty levels, and whether the stories were hygiene or compelling.  From there, I executed each story in succession, creating tests before implementing them (with jasmine).  Please refer to my Kan-Ban board to see my latest progress (https://trello.com/b/5eQGqxFf/grocerylist).  Although upon scheduling my presentation friday night, I anticipated having 6 full days to work on this, I realized that I needed to submit this one full day prior to the presentation day and also something came up on sunday so I wasn't able to work on it that day either.  Full disclaimer, I took approximately 3.5 days to work on this project (25 hours).
+2. Approach: My approach to building this application was to plan out the user stories on a whiteboard first with drawings of how the database models would relate to the front-end UI.  Then, I made a Kan-Ban board with 9 user stories, each with a task list, wireframes, difficulty levels, and whether the stories were hygiene or compelling.  From there, I executed each story in succession, creating tests before implementing them (with jasmine).  Please refer to my Kan-Ban board to see my latest progress (https://trello.com/b/5eQGqxFf/grocerylist).  
 
-3. Project Status: As of right now, I've completed approximately 80 percent of the minimum requirements of the project.  Had I had more time, I would have been able to authenticate users and offer an update/edit feature in the grocery list.  
+3. Project Status: I took 4.5 days to complete this project.  Had I had more time, I would have been able to authenticate users on the back-end.  Right now, the UI shows a login page but does not authenticate with the back-end yet.  You can just click sign in without entering anything in the sign in page and it will sign you into the grocery list page.   
 
 4. Project Architecture: I split the application between the front-end with React and the back-end with express/node and used sequelize/postgreSQL for the ORM and database respectively.  I used create-react-app for the front-end which provided the typical boilerplate code, most of which I deleted.  I also used npm init which provided boilerplate on the server side package.json.  Finally, I used sequelize init which gave me the typical boilerplate code to configure sequelize and the model/migration/seed/config files.  For deployment, I used Heroku.
 
@@ -26,4 +20,4 @@ how to do this.  From there, I looked up real time updates with react and expres
 to capture the development server URL or the production URL so that I could send this as input to socket when opening a socket in react to
 the back-end server.  Most of the other technical issues that I came across were related to making http requests from the front-end to the
 endpoints that I've defined using express on the back-end.  Startup is slow because I make two asynchronous calls upon mounting the main react component.  I thought at first to simply make server requests every 3 seconds to the back-end, but I learned that that was a very crude way of
-doing it and that opening a socket was more effective.  I kept the UI simple, with minimal css styling.  If I had more time, I'd think more about the timing of updates and what requests to make to the back-end and in what order as well as the missing authentication and update/edit features.  Right now, the interface is a little flickery if you make changes during a socket update.
+doing it and that opening a socket was more effective.  I kept the UI simple, with minimal css styling.  If I had more time, I'd think more about the timing of updates and what requests to make to the back-end and in what order as well as the missing authentication features.  Right now, the interface is a little flickery if you make changes during a socket update.
