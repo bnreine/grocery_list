@@ -10,7 +10,7 @@ class GroceryList extends Component {
       nextItem: '',
       nextId: 0,
       nextPurchased: false,
-      endpoint: ""/*"https://bnreine-grocery-list.herokuapp.com/"  "http://127.0.0.1:5000"*/
+      endpoint: ""   /*"https://bnreine-grocery-list.herokuapp.com/"  "http://127.0.0.1:5000"*/
     }
   }
 
@@ -106,7 +106,7 @@ class GroceryList extends Component {
 
 
   togglePurchased(index){
-    const lists = this.state.lists.slice();  //makes a copy of the lists array
+    const lists = this.state.lists.slice();  
     const listItem = lists[index];
     listItem.purchased = listItem.purchased ? false : true;
     this.setState({ lists: lists });

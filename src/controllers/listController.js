@@ -46,10 +46,7 @@ module.exports = {
       }
     })
   },
-  getURL(req, res, next){
-    const url = process.env.URL;
-    res.send({url});
-  },
+
   updateItem(req, res, next){
     const updatedListItem = req.body.newListItem;
     listQueries.updateItem(updatedListItem, (err, listItem) => {
@@ -60,5 +57,9 @@ module.exports = {
       }
     })
   },
+  getURL(req, res, next){
+    const url = process.env.URL;
+    res.send({url});
+  }
 
 }
