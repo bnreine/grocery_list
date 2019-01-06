@@ -47,8 +47,6 @@ const getListEntriesAndEmit = socket => {
   .catch((err) => {
     console.error(`Error: ${err}`);
   })
-
-
 };
 
 
